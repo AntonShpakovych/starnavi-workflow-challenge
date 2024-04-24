@@ -30,7 +30,12 @@ class Node(Base):
 
     type: Mapped[NodeType]
 
-    workflow_id: Mapped[int] = mapped_column(ForeignKey("workflows.id", ondelete="CASCADE"))
+    workflow_id: Mapped[int] = mapped_column(
+        ForeignKey(
+            "workflows.id",
+            ondelete="CASCADE"
+        )
+    )
     workflow: Mapped["Workflow"] = relationship(back_populates="nodes")
 
     previous_nodes: Mapped[list["Node"]] = relationship(
@@ -48,9 +53,15 @@ class Node(Base):
 class StartNode(Node):
     __tablename__ = "start_nodes"
 
-    id: Mapped[int] = mapped_column(ForeignKey("nodes.id"), primary_key=True)
+    id: Mapped[int] = mapped_column(
+        ForeignKey("nodes.id"),
+        primary_key=True
+    )
 
-    next_node_id: Mapped[int] = mapped_column(ForeignKey("nodes.id"), nullable=True)
+    next_node_id: Mapped[int] = mapped_column(
+        ForeignKey("nodes.id"),
+        nullable=True
+    )
     next_node: Mapped["Node"] = relationship(
         foreign_keys=[next_node_id],
         back_populates="previous_nodes",
@@ -66,11 +77,17 @@ class StartNode(Node):
 class MessageNode(Node):
     __tablename__ = "message_nodes"
 
-    id: Mapped[int] = mapped_column(ForeignKey("nodes.id"), primary_key=True)
+    id: Mapped[int] = mapped_column(
+        ForeignKey("nodes.id"),
+        primary_key=True
+    )
     status: Mapped[MessageNodeStatus]
     text: Mapped[str]
 
-    next_node_id: Mapped[int] = mapped_column(ForeignKey("nodes.id"), nullable=True)
+    next_node_id: Mapped[int] = mapped_column(
+        ForeignKey("nodes.id"),
+        nullable=True
+    )
     next_node: Mapped["Node"] = relationship(
         foreign_keys=[next_node_id],
         back_populates="previous_nodes",
@@ -86,10 +103,19 @@ class MessageNode(Node):
 class ConditionNode(Node):
     __tablename__ = "condition_nodes"
 
-    id: Mapped[int] = mapped_column(ForeignKey("nodes.id"), primary_key=True)
+    id: Mapped[int] = mapped_column(
+        ForeignKey("nodes.id"),
+        primary_key=True
+    )
 
-    yes_node_id: Mapped[int] = mapped_column(ForeignKey("nodes.id"), nullable=True)
-    no_node_id: Mapped[int] = mapped_column(ForeignKey("nodes.id"), nullable=True)
+    yes_node_id: Mapped[int] = mapped_column(
+        ForeignKey("nodes.id"),
+        nullable=True
+    )
+    no_node_id: Mapped[int] = mapped_column(
+        ForeignKey("nodes.id"),
+        nullable=True
+    )
     yes_node: Mapped["Node"] = relationship(
         foreign_keys=[yes_node_id],
         back_populates="previous_nodes",
@@ -110,7 +136,10 @@ class ConditionNode(Node):
 class EndNode(Node):
     __tablename__ = "end_nodes"
 
-    id: Mapped[int] = mapped_column(ForeignKey("nodes.id"), primary_key=True)
+    id: Mapped[int] = mapped_column(
+        ForeignKey("nodes.id"),
+        primary_key=True
+    )
 
     __mapper_args__ = {
         "polymorphic_identity": NodeType.END,
