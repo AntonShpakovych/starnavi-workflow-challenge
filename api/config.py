@@ -1,4 +1,5 @@
 import os
+from functools import lru_cache
 
 from dotenv import load_dotenv
 from pydantic_settings import BaseSettings
@@ -19,7 +20,3 @@ SQLALCHEMY_DATABASE_URL = (
     f"{POSTGRES_USER}:{POSTGRES_PASSWORD}@"
     f"{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_NAME}"
 )
-
-
-class Settings(BaseSettings):
-    SQLALCHEMY_DATABASE_URL: str = SQLALCHEMY_DATABASE_URL
