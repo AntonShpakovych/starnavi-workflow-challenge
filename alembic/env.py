@@ -10,7 +10,8 @@ from alembic import context
 from config import SQLALCHEMY_DATABASE_URL
 
 from api.models import Base
-from api.workflow import models
+from api.workflow.models import node as node_models
+from api.workflow.models import workflow as workflow_nodes
 
 
 # this is the Alembic Config object, which provides

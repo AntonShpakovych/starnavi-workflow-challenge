@@ -6,12 +6,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from api.models import Base
 
 
-class Workflow(Base):
-    __tablename__ = "workflows"
-
-    nodes: Mapped[list["Node"]] = relationship(back_populates="workflow")
-
-
 class NodeType(enum.Enum):
     START = "start"
     MESSAGE = "message"
@@ -42,7 +36,7 @@ class Node(Base):
             ondelete="CASCADE"
         )
     )
-    workflow: Mapped["Workflow"] = relationship(back_populates="nodes")
+    workflow: Mapped["Workflow"] = relationship(back_populates="nodes")  # noqa
 
     previous_nodes: Mapped[list["Node"]] = relationship(
         secondary="nodes_nodes",
