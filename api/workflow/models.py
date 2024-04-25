@@ -25,6 +25,12 @@ class MessageNodeStatus(enum.Enum):
     OPENED = "opened"
 
 
+class ConditionOnMessageStatus(enum.Enum):
+    STATUS_PENDING = "status == pending"
+    STATUS_SENT = "status == sent"
+    STATUS_OPENED = "status == opened"
+
+
 class Node(Base):
     __tablename__ = "nodes"
 
@@ -107,6 +113,7 @@ class ConditionNode(Node):
         ForeignKey("nodes.id"),
         primary_key=True
     )
+    condition: Mapped[ConditionOnMessageStatus]
 
     yes_node_id: Mapped[int] = mapped_column(
         ForeignKey("nodes.id"),
