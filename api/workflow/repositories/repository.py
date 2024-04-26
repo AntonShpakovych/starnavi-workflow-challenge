@@ -10,10 +10,10 @@ T = TypeVar("T", bound=Base)
 
 class Repository(ABC):
     """
-    An abstract repository for all model repositories that implement simple CRUD
+    An abstract repository for model repositories that implement simple CRUD
     """
-    def __init__(self, db: AsyncSession) -> None:
-        self.db = db
+    def __init__(self, session: AsyncSession) -> None:
+        self.session = session
 
     @abstractmethod
     async def create(self, *args, **kwargs) -> T:

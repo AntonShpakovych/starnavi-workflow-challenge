@@ -1,5 +1,6 @@
 import enum
 
+
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -36,7 +37,7 @@ class Node(Base):
             ondelete="CASCADE"
         )
     )
-    workflow: Mapped["Workflow"] = relationship(back_populates="nodes")  # noqa
+    workflow: Mapped["Workflow"] = relationship(back_populates="nodes") # noqa
 
     previous_nodes: Mapped[list["Node"]] = relationship(
         secondary="nodes_nodes",

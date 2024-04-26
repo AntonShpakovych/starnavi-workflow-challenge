@@ -1,13 +1,9 @@
 from fastapi import FastAPI
 
-from api.dependencies import AsyncSession
-from api.workflow.models.workflow import Workflow
+from api.workflow.models.node import *  # for handling models in difference files # noqa
+from api.workflow.models.workflow import *  # for handling models in difference files # noqa
+
+from api.workflow.routers.workflow import router as workflow_router
 
 app = FastAPI()
-
-
-@app.get("/")
-async def check(session: AsyncSession):
-    workflow = Workflow()
-    session.add(workflow)
-    await session.commit()
+app.include_router(workflow_router)
